@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import listingsRouter from './routes/listings.js';
 import categoriesRouter from './routes/categories.js';
+import htmlRouter from './routes/html.js';
 
 // Load environment variables
 dotenv.config();
@@ -28,6 +29,9 @@ app.use('/src', express.static(path.join(__dirname, '../src')));
 // API Routes
 app.use('/api/listings', listingsRouter);
 app.use('/api/categories', categoriesRouter);
+
+// HTML Fragment Routes (for Datastar)
+app.use('/html', htmlRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
