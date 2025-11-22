@@ -42,8 +42,8 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Hem</a>
                     <a href="#categories" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Kategorier</a>
+                    <a href="#browse" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Bläddra</a>
                     <a href="#featured" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Utvalda</a>
-                    <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors">Om</a>
                 </div>
 
                 <!-- Right Side Actions -->
@@ -93,8 +93,8 @@
                 <div class="space-y-2 pt-2">
                     <a href="#home" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Hem</a>
                     <a href="#categories" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Kategorier</a>
+                    <a href="#browse" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Bläddra</a>
                     <a href="#featured" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Utvalda</a>
-                    <a href="#about" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Om</a>
                     <a href="#submit" class="block px-4 py-2 bg-primary-600 text-white hover:bg-primary-700 rounded-lg text-center font-medium">Lägg till listning</a>
                 </div>
             </div>
@@ -568,6 +568,318 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Directory Listing with Sidebar Filters -->
+    <section id="browse" class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900"
+             data-signals='{
+                 "selectedCategory": "all",
+                 "priceRange": "any",
+                 "rating": 0,
+                 "sortBy": "popular",
+                 "viewMode": "grid",
+                 "showFilters": true,
+                 "searchTerm": "",
+                 "selectedTags": []
+             }'>
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-8">
+                <h2 class="section-heading mb-2">Bläddra i alla tjänster</h2>
+                <p class="text-gray-600 dark:text-gray-400 text-lg">Hitta den perfekta lösningen för dina behov</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar Filters -->
+                <aside class="lg:w-80 flex-shrink-0">
+                    <div class="lg:sticky lg:top-24 space-y-6">
+                        <!-- Mobile Filter Toggle -->
+                        <button
+                            class="lg:hidden w-full btn btn-outline"
+                            data-on:click="showFilters = !showFilters"
+                        >
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                            </svg>
+                            Filtrera & Sortera
+                        </button>
+
+                        <!-- Filter Panel -->
+                        <div
+                            class="space-y-6"
+                            data-class:hidden="!showFilters"
+                            data-class:block="showFilters"
+                        >
+                            <!-- Search Within Results -->
+                            <div class="card p-4">
+                                <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                                    Sök i resultat
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Sök tjänster..."
+                                        class="w-full px-4 py-2 pr-10 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none"
+                                        data-model="searchTerm"
+                                    >
+                                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Category Filter -->
+                            <div class="card p-4">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Kategorier</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="all" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory" checked>
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Alla kategorier</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">500</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="productivity" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Produktivitet</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">42</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="development" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Utveckling</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">68</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="marketing" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Marknadsföring</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">35</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="design" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Design</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">51</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="analytics" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Analys</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">29</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="category" value="tools" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="selectedCategory">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Verktyg</span>
+                                        <span class="ml-auto text-xs text-gray-500 dark:text-gray-400">87</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Price Range Filter -->
+                            <div class="card p-4">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Pris</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="price" value="any" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="priceRange" checked>
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Alla priser</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="price" value="free" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="priceRange">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Gratis</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="price" value="0-29" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="priceRange">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">$0 - $29</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="price" value="30-99" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="priceRange">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">$30 - $99</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="price" value="100+" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="priceRange">
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">$100+</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Rating Filter -->
+                            <div class="card p-4">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Betyg</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="rating" value="0" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="rating" checked>
+                                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">Alla betyg</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="rating" value="4" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="rating">
+                                        <div class="ml-2 flex items-center">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">4★ & uppåt</span>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer group">
+                                        <input type="radio" name="rating" value="4.5" class="w-4 h-4 text-primary-600 focus:ring-primary-500" data-model="rating">
+                                        <div class="ml-2 flex items-center">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400">4.5★ & uppåt</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Tags Filter -->
+                            <div class="card p-4">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Populära taggar</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="px-3 py-1 text-xs rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                        AI-driven
+                                    </button>
+                                    <button class="px-3 py-1 text-xs rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                        Collaboration
+                                    </button>
+                                    <button class="px-3 py-1 text-xs rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                        Cloud
+                                    </button>
+                                    <button class="px-3 py-1 text-xs rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                        Open Source
+                                    </button>
+                                    <button class="px-3 py-1 text-xs rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                        Mobile
+                                    </button>
+                                    <button class="px-3 py-1 text-xs rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                                        Real-time
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Clear Filters -->
+                            <button
+                                class="w-full btn btn-outline text-sm"
+                                data-on:click="selectedCategory = 'all'; priceRange = 'any'; rating = 0; searchTerm = ''; selectedTags = []"
+                            >
+                                Rensa alla filter
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content Area -->
+                <div class="flex-1 min-w-0">
+                    <!-- Toolbar -->
+                    <div class="card p-4 mb-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                            <!-- Results Count -->
+                            <div class="text-gray-600 dark:text-gray-400">
+                                Visar <span class="font-semibold text-gray-900 dark:text-white">1-12</span> av <span class="font-semibold text-gray-900 dark:text-white">500</span> tjänster
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <!-- Sort Dropdown -->
+                                <div class="flex items-center gap-2">
+                                    <label class="text-sm text-gray-600 dark:text-gray-400">Sortera:</label>
+                                    <select
+                                        class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none text-sm"
+                                        data-model="sortBy"
+                                    >
+                                        <option value="popular">Mest populär</option>
+                                        <option value="newest">Nyast först</option>
+                                        <option value="rating">Högst betyg</option>
+                                        <option value="price_low">Pris (låg-hög)</option>
+                                        <option value="price_high">Pris (hög-låg)</option>
+                                        <option value="name">Namn (A-Ö)</option>
+                                    </select>
+                                </div>
+
+                                <!-- View Mode Toggle -->
+                                <div class="flex items-center gap-1 border border-gray-300 dark:border-gray-600 rounded-lg p-1">
+                                    <button
+                                        class="p-2 rounded transition-colors"
+                                        data-class:bg-primary-100="viewMode === 'grid'"
+                                        data-class:text-primary-600="viewMode === 'grid'"
+                                        data-class:dark:bg-primary-900="viewMode === 'grid'"
+                                        data-class:dark:text-primary-400="viewMode === 'grid'"
+                                        data-on:click="viewMode = 'grid'"
+                                    >
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                        </svg>
+                                    </button>
+                                    <button
+                                        class="p-2 rounded transition-colors"
+                                        data-class:bg-primary-100="viewMode === 'list'"
+                                        data-class:text-primary-600="viewMode === 'list'"
+                                        data-class:dark:bg-primary-900="viewMode === 'list'"
+                                        data-class:dark:text-primary-400="viewMode === 'list'"
+                                        data-on:click="viewMode = 'list'"
+                                    >
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Filters Display -->
+                    <div class="mb-6 flex flex-wrap gap-2" data-show="selectedCategory !== 'all' || priceRange !== 'any' || rating > 0 || searchTerm !== ''">
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Aktiva filter:</div>
+                        <span class="badge badge-primary" data-show="selectedCategory !== 'all'">
+                            <span data-text="selectedCategory"></span>
+                            <button class="ml-1" data-on:click="selectedCategory = 'all'">×</button>
+                        </span>
+                        <span class="badge badge-primary" data-show="priceRange !== 'any'">
+                            <span data-text="priceRange"></span>
+                            <button class="ml-1" data-on:click="priceRange = 'any'">×</button>
+                        </span>
+                        <span class="badge badge-primary" data-show="rating > 0">
+                            <span data-text="rating + '★ & uppåt'"></span>
+                            <button class="ml-1" data-on:click="rating = 0">×</button>
+                        </span>
+                    </div>
+
+                    <!-- Listings Grid/List -->
+                    <div
+                        data-class:grid="viewMode === 'grid'"
+                        data-class:grid-cols-1="viewMode === 'grid'"
+                        data-class:md:grid-cols-2="viewMode === 'grid'"
+                        data-class:xl:grid-cols-3="viewMode === 'grid'"
+                        data-class:gap-6="viewMode === 'grid'"
+                        data-class:space-y-4="viewMode === 'list'"
+                    >
+                        <!-- Sample listings will be populated here by backend -->
+                        <!-- For now showing placeholder message -->
+                        <div class="col-span-full text-center py-12 text-gray-500 dark:text-gray-400">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <p class="text-lg font-medium mb-2">Filterfunktion redo!</p>
+                            <p>Anslut till backend för att visa filtrerade resultat</p>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="text-sm text-gray-600 dark:text-gray-400">
+                            Sida 1 av 42
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="btn btn-outline py-2 px-3 text-sm" disabled>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                                Föregående
+                            </button>
+                            <div class="flex gap-1">
+                                <button class="w-10 h-10 rounded-lg bg-primary-600 text-white font-medium">1</button>
+                                <button class="w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">2</button>
+                                <button class="w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">3</button>
+                                <span class="w-10 h-10 flex items-center justify-center text-gray-500">...</span>
+                                <button class="w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">42</button>
+                            </div>
+                            <button class="btn btn-primary py-2 px-3 text-sm">
+                                Nästa
+                                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
