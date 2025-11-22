@@ -2,13 +2,23 @@
   "name": "datastar-directory",
   "version": "1.0.0",
   "description": "A modern directory landing page with Datastar and Basecoat UI",
+  "type": "module",
   "scripts": {
     "dev": "npx tailwindcss -i ./src/css/input.css -o ./public/css/output.css --watch",
-    "build": "npx tailwindcss -i ./src/css/input.css -o ./public/css/output.css --minify"
+    "build": "npx tailwindcss -i ./src/css/input.css -o ./public/css/output.css --minify",
+    "server": "node server/index.js",
+    "server:dev": "node --watch server/index.js",
+    "migrate": "node server/migrate.js"
   },
   "keywords": ["datastar", "directory", "basecoat", "tailwind"],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "cors": "^2.8.5"
+  },
   "devDependencies": {
     "tailwindcss": "^3.4.0"
   }
